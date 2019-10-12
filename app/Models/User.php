@@ -10,7 +10,6 @@ use Illuminate\Notifications\Notifiable;
 /**
  * Class User
  * @package App\Models
- * @property string $name
  * @property string $email
  * @property string $password
  * @property Carbon $updated_at

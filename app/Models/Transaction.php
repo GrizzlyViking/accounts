@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Transaction
@@ -11,15 +12,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $account_id
  * @property float $value
- * @property float $balance
  * @property string $description
  * @property Carbon $created_at
  */
 class Transaction extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'value',
-        'balance',
         'description',
     ];
 

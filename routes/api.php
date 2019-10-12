@@ -7,12 +7,21 @@ use Illuminate\Http\Request;
 | API Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| List accounts (also returns the sum balance of the account, based on the sum of the amount of all transactions for the account)
+| Create new account
+| List transactions for specific account
+| Create new transaction for specific account
+| Delete a specific transaction
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('account')->middleware('api')->group(function () {
+    Route::get('/', ['uses' => 'AccountController@index', 'as' => 'account.list']);
+    Route::post('/', ['uses' => 'AccountController@store', 'as' => 'account.create']);
+
+    Route::prefix('{account_id}/transactions')->group(function () {
+        Route::get('/', ['uses' => 'TransactionController@index', 'as' => 'transactions.list']);
+        Route::post('/', ['uses' => 'TransactionController@store', 'as' => 'transactions.create']);
+        Route::delete('{transaction_id}', ['uses' => 'TransactionController@destroy', 'as' => 'transactions.delete']);
+    });
 });
