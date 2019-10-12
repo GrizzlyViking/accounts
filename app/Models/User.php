@@ -15,7 +15,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string $password
  * @property Carbon $updated_at
  * @property Carbon $created_at
- * @property Account $account
+ * @property Account $accounts
  */
 class User extends Authenticatable
 {
@@ -51,8 +51,8 @@ class User extends Authenticatable
     /**
      * User can have many accounts
      */
-    public function account()
+    public function accounts()
     {
-        $this->hasMany(Account::class);
+        return $this->hasMany(Account::class);
     }
 }

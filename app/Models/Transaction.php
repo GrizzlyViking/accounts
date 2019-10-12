@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,8 +13,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $value
  * @property float $balance
  * @property string $description
+ * @property Carbon $created_at
  */
 class Transaction extends Model
 {
+    protected $fillable = [
+        'value',
+        'balance',
+        'description',
+    ];
 
+    public function account()
+    {
+        return $this->belongsTo(Account::class);
+    }
 }

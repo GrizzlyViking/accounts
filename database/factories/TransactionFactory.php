@@ -8,7 +8,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Transaction::class, function (Faker $faker) {
     return [
-        'account_id' => factory(Account::class)->create()->id,
         'value' => $faker->randomFloat(2,-100, 100),
         'balance' => $faker->randomFloat(2,-100, 100),
         'description' => $faker->text(255),
