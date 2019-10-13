@@ -17,7 +17,7 @@ class CreateTransactionsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('account_id');
             $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
-            $table->decimal('value', 10, 2)->default(0.00);
+            $table->decimal('amount', 10, 2)->default(0.00);
             $table->string('description');
             $table->softDeletes();
             $table->timestamps();

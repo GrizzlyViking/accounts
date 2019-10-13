@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  * @property int $id
  * @property int $account_id
- * @property float $value
+ * @property float $amount
  * @property string $description
  * @property Carbon $created_at
  */
@@ -20,8 +20,9 @@ class Transaction extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'value',
+        'amount',
         'description',
+        'account_id',
     ];
 
     public function account()

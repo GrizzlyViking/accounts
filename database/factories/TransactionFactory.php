@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Transaction::class, function (Faker $faker) {
     return [
-        'value' => $faker->randomFloat(2,-100, 100),
+        'amount' => $faker->randomFloat(2,-100, 100),
         'description' => $faker->text(255),
         'created_at' => $faker->dateTimeBetween('-3 years', 'now'),
     ];

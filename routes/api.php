@@ -19,9 +19,9 @@ Route::prefix('account')->middleware('api')->group(function () {
     Route::get('/', ['uses' => 'AccountController@index', 'as' => 'account.list']);
     Route::post('/', ['uses' => 'AccountController@store', 'as' => 'account.create']);
 
-    Route::prefix('{account_id}/transactions')->group(function () {
+    Route::prefix('{account}/transactions')->group(function () {
         Route::get('/', ['uses' => 'TransactionController@index', 'as' => 'transactions.list']);
         Route::post('/', ['uses' => 'TransactionController@store', 'as' => 'transactions.create']);
-        Route::delete('{transaction_id}', ['uses' => 'TransactionController@destroy', 'as' => 'transactions.delete']);
+        Route::delete('{transaction}', ['uses' => 'TransactionController@destroy', 'as' => 'transactions.delete']);
     });
 });

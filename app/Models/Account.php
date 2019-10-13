@@ -39,6 +39,6 @@ class Account extends Model
 
     public function getBalanceAttribute()
     {
-        return $this->transactions()->sum('value');
+        return $this->transactions()->sum('amount');
     }
 }

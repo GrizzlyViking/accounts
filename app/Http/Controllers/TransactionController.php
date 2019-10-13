@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\Transaction;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class TransactionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @param Account $account
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function index(Account $account)
     {
@@ -19,24 +22,39 @@ class TransactionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param Account $account
+     * @param Request $request
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function store(Account $account, Request $request)
     {
-        $account->transactions()->save(Transaction::create($request->all()));
+        $validated = $request->validate([
+            'amount'       => 'required|numeric',
+            'description' => 'required',
+        ]);
+
+        Arr::set($validated, 'account_id', $account->id);
+
+        $transaction = Transaction::create($validated);
+
+        return response()->json($transaction->toArray(), 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param Account     $account
+     * @param Transaction $transaction
      *
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
+     * @throws Exception
      */
-    public function destroy(Transaction $transaction)
+    public function destroy(Account $account, Transaction $transaction)
     {
+        if ($transaction->account_id !== $account->id) {
+            throw new Exception('Transaction: '.$transaction->id.' does not belong to Account: '.$account->id);
+        }
         $transaction->delete();
+
+        return response()->json('OK');
     }
 }
